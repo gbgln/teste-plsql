@@ -1,0 +1,60 @@
+CREATE SEQUENCE om_record_seq
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1;
+----------------------------------------------
+CREATE OR REPLACE Function CheckNatureza
+   ( tipo_in IN number, subtipo_in IN number )
+   RETURN number
+IS
+   natureza number;
+
+   cursor find_natureza is
+   SELECT natureza
+     FROM om_record_natureza
+     WHERE tipo = tipo_in
+     AND subtipo = subtipo_in;
+
+BEGIN
+
+   open find_natureza;
+   fetch find_natureza into natureza;
+
+   if find_natureza%notfound then
+      natureza := 0;
+   end if;
+
+   close find_natureza;
+
+RETURN natureza;
+
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+----------------------------------------------
+CREATE OR REPLACE TRIGGER tcall_om_record_trg
+AFTER INSERT
+   ON tcall
+   FOR EACH ROW
+
+DECLARE
+
+v_natureza := CheckNatureza(:new.tipo, :new.subtipo);
+
+BEGIN
+   
+   INSERT INTO om_record
+   ( oid,
+     tipo,
+     subtipo,
+     natureza,
+     data_criacao )
+   VALUES
+   ( om_record_seq.NEXTVAL,
+     :new.tipo,
+     :new.subtipo,
+     v_natureza,
+     sysdate);
+
+END;
