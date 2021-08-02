@@ -1,0 +1,89 @@
+CREATE TABLE ALUNOS ( ID INTEGER PRIMARY KEY AUTOINCREMENT, NOME STRING(30), VALOR INTEGER );
+CREATE TABLE NOTAS ( NOTA INTEGER PRIMARY KEY AUTOINCREMENT, VALOR_MIN INTEGER (2), VALOR_MAX INTEGER (3));
+------------------------------------------------------
+INSERT INTO ALUNOS (ID,NOME,VALOR) VALUES (
+  '1',
+  'Julia',
+  '81'
+);
+INSERT INTO ALUNOS (ID,NOME,VALOR) VALUES (
+  '2',
+  'Carol',
+  '68'
+);
+INSERT INTO ALUNOS (ID,NOME,VALOR) VALUES (
+  '3',
+  'Maria',
+  '99'
+); 
+INSERT INTO ALUNOS (ID,NOME,VALOR) VALUES (
+  '4',
+  'Andreia',
+  '78'
+);
+INSERT INTO ALUNOS (ID,NOME,VALOR) VALUES (
+  '5',
+  'Jaqueline',
+  '63'
+);
+INSERT INTO ALUNOS (ID,NOME,VALOR) VALUES (
+  '6',
+  'Marcela',
+  '88'
+);
+
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '1',
+  '0',
+  '9'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '2',
+  '10',
+  '19'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '3',
+  '20',
+  '29'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '4',
+  '30',
+  '39'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '5',
+  '40',
+  '49'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '6',
+  '50',
+  '59'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '7',
+  '60',
+  '69'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '8',
+  '70',
+  '79'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '9',
+  '80',
+  '89'
+); 
+INSERT INTO NOTAS (NOTA,VALOR_MIN,VALOR_MAX) VALUES (
+  '10',
+  '90',
+  '100'
+); 
+--------------------------------------------------------
+SELECT case WHEN n.nota <= 7 then 'NULL' else a.NOME end NOME, n.NOTA, a.VALOR 
+from alunos a, notas n 
+where a.VALOR BETWEEN n.VALOR_MIN AND n.VALOR_MAX
+order by nota desc, nome desc;
